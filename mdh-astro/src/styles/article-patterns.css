@@ -1,0 +1,99 @@
+/* ============================================================
+   ARTICLE CONTENT PATTERNS
+   Reusable visual components dropped into article Markdown
+   via raw HTML. Base article chrome (header, meta bar, direct
+   answer) lives in ArticleLayout.astro's scoped styles instead.
+   ============================================================ */
+
+.glance-box {
+  background: #fff;
+  border: 1.5px solid var(--teal-deep);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin: 0 0 32px;
+  max-width: 720px;
+}
+.glance-head {
+  background: var(--teal-deep);
+  color: #fff;
+  padding: 12px 20px;
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 600;
+}
+.glance-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.glance-item { padding: 14px 20px; border-bottom: 1px solid var(--divider); }
+.glance-item:nth-child(odd) { border-right: 1px solid var(--divider); }
+.glance-item .gl-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 4px;
+}
+.glance-item .gl-value { font-size: 13.5px; font-weight: 700; color: var(--ink); line-height: 1.4; }
+
+.warn-card { background: #fff; border: 1px solid var(--divider); border-radius: var(--radius-md); overflow: hidden; margin: 18px 0; }
+.warn-card-head { background: #fceee8; padding: 14px 20px; display: flex; align-items: center; gap: 12px; }
+.warn-num {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--clay);
+  color: #fff;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.warn-card-head h4 { font-size: 15.5px; font-weight: 700; color: var(--ink); margin: 0; }
+.warn-card-body { padding: 18px 20px; }
+.warn-row { display: grid; grid-template-columns: 120px 1fr; gap: 14px; margin-bottom: 10px; font-size: 13.5px; }
+.warn-row .wr-label { font-weight: 700; color: var(--ink-soft); font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.03em; padding-top: 2px; }
+.warn-row .wr-value { color: var(--ink); }
+.warn-not { margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--divider); font-size: 13px; color: var(--ink-soft); }
+.warn-not strong { color: var(--clay); }
+
+.source-card {
+  background: var(--paper);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  margin-top: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.source-card svg { flex-shrink: 0; color: var(--teal-mid); margin-top: 2px; }
+.source-card .sc-name { font-size: 12.5px; font-weight: 700; color: var(--teal-deep); }
+.source-card .sc-checked { font-size: 11px; color: var(--ink-soft); margin-top: 2px; }
+
+.case-box { background: var(--ink); color: #fff; border-radius: var(--radius-md); padding: 26px; margin: 28px 0; }
+.case-box h4 { font-family: var(--serif); font-size: 18px; margin-bottom: 12px; color: #fff; }
+.case-box p { color: rgba(255, 255, 255, 0.75); font-size: 14.5px; margin-bottom: 10px; }
+.case-box .case-stat { display: flex; gap: 24px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.15); flex-wrap: wrap; }
+.case-box .case-stat div .n { font-family: var(--serif); font-size: 22px; font-weight: 700; color: var(--clay); }
+.case-box .case-stat div .l { font-size: 11.5px; color: rgba(255, 255, 255, 0.6); }
+
+.redflag-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 22px 0; }
+.redflag-card { background: #fceee8; border: 1px solid #e8c3ae; border-radius: var(--radius-sm); padding: 16px 18px; }
+.redflag-card .rf-icon { color: var(--clay); font-weight: 700; font-size: 13px; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+.redflag-card p { font-size: 13.5px; margin-bottom: 0; color: var(--ink); }
+
+.source-tier-list { font-size: 13px; color: var(--ink-soft); margin-top: 8px; list-style: none; padding: 0; }
+.source-tier-list li { margin-bottom: 8px; display: flex; gap: 8px; align-items: flex-start; }
+.tier-badge { flex-shrink: 0; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 10px; color: #fff; margin-top: 1px; }
+.tier-1 { background: var(--teal-deep); }
+.tier-2 { background: var(--teal-mid); }
+.tier-4 { background: #9a9284; }
+
+@media (max-width: 680px) {
+  .glance-grid { grid-template-columns: 1fr; }
+  .glance-item:nth-child(odd) { border-right: none; }
+  .redflag-grid { grid-template-columns: 1fr; }
+  .warn-row { grid-template-columns: 1fr; gap: 4px; }
+}

@@ -1,0 +1,185 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  lang?: 'en' | 'es';
+  /** Path to the equivalent page in the other language, e.g. "/es/guias/deudas-medicas/" */
+  altLangPath?: string;
+  currentPath?: string;
+}
+
+const {
+  title,
+  description,
+  lang = 'en',
+  altLangPath,
+  currentPath = Astro.url.pathname,
+} = Astro.props;
+
+const nav = {
+  en: {
+    home: 'Home',
+    credit: 'Credit Counseling',
+    bankruptcy: 'Bankruptcy Attorneys',
+    legal: 'Legal Aid',
+    unions: 'Credit Unions',
+    housing: 'Housing Counselors',
+    guides: 'Guides',
+    about: 'About',
+    listOrg: 'List Your Organization',
+    howVerify: 'How We Verify',
+    contact: 'Contact',
+    editorialIndependence: 'Editorial Independence',
+    reportError: 'Report an Error',
+    reviewedBy: 'Researched & verified by Daniel Rodriguez',
+    notAdvice:
+      'Not legal or financial advice. Miami Debt Help is an independent directory and educational resource. Some listings are paid placements, always disclosed.',
+    howWeMakeMoney: 'How We Make Money',
+    privacy: 'Privacy Policy',
+    terms: 'Terms of Use',
+  },
+  es: {
+    home: 'Inicio',
+    credit: 'Asesoría de Crédito',
+    bankruptcy: 'Abogados de Bancarrota',
+    legal: 'Asistencia Legal',
+    unions: 'Cooperativas de Crédito',
+    housing: 'Asesores de Vivienda',
+    guides: 'Guías',
+    about: 'Quiénes Somos',
+    listOrg: 'Agregar Su Organización',
+    howVerify: 'Cómo Verificamos',
+    contact: 'Contacto',
+    editorialIndependence: 'Independencia Editorial',
+    reportError: 'Reportar un Error',
+    reviewedBy: 'Investigado y verificado por Daniel Rodriguez',
+    notAdvice:
+      'Esto no es asesoría legal ni financiera. Miami Debt Help es un directorio independiente y un recurso educativo. Algunos listados son pagados, siempre identificados.',
+    howWeMakeMoney: 'Cómo Generamos Ingresos',
+    privacy: 'Política de Privacidad',
+    terms: 'Términos de Uso',
+  },
+};
+
+const t = nav[lang];
+const base = lang === 'es' ? '/es' : '';
+const isCurrentEn = lang === 'en';
+---
+
+<!DOCTYPE html>
+<html lang={lang}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+
+  <!-- hreflang -->
+  <link rel="alternate" hreflang="en" href={`https://miamidebthelp.com${lang === 'en' ? currentPath : (altLangPath ?? '/')}`} />
+  <link rel="alternate" hreflang="es" href={`https://miamidebthelp.com${lang === 'es' ? currentPath : (altLangPath ?? '/es/')}`} />
+  <link rel="alternate" hreflang="x-default" href={`https://miamidebthelp.com${lang === 'en' ? currentPath : (altLangPath ?? '/')}`} />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Analytics: replace G-XXXXXXX with real GA4 measurement ID before launch -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXX');
+  </script>
+
+  <slot name="head" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="utility-bar">
+    <div class="wrap">
+      <div class="lang-toggle" role="group" aria-label="Language selector">
+        <a href={isCurrentEn ? currentPath : (altLangPath ?? '/')} lang="en" class:list={[{ active: isCurrentEn }]}>EN</a>
+        <a href={!isCurrentEn ? currentPath : (altLangPath ?? '/es/')} lang="es" class:list={[{ active: !isCurrentEn }]}>ES</a>
+      </div>
+      <nav class="utility-links" aria-label="Utility">
+        <a href={`${base}/submit-a-listing/`}>{t.listOrg}</a>
+        <a href={`${base}/how-we-verify/`}>{t.howVerify}</a>
+        <a href={`${base}/contact/`}>{t.contact}</a>
+      </nav>
+    </div>
+  </div>
+
+  <header class="masthead">
+    <div class="wrap">
+      <div class="logo-block">
+        <div class="seal" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#0F3D3E" stroke-width="2"
+            ><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"></path><circle
+              cx="12"
+              cy="12"
+              r="9"></circle></svg
+          >
+        </div>
+        <div class="logo-text">
+          <div class="name"><a href={base || '/'} style="text-decoration:none; color:inherit;">Miami Debt Help</a></div>
+          <div class="tagline">{lang === 'en' ? 'Verified Local Resources' : 'Recursos Locales Verificados'}</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="identity-strip">
+    <div class="wrap">
+      <div class="identity-byline">{t.reviewedBy}</div>
+      <nav class="identity-links" aria-label="Trust and editorial policies">
+        <a href={`${base}/editorial-independence/`}>{t.editorialIndependence}</a>
+        <a href={`${base}/how-we-verify/`}>{t.howVerify}</a>
+        <a href={`${base}/report-an-error/`}>{t.reportError}</a>
+      </nav>
+    </div>
+  </div>
+
+  <nav class="primary-nav" aria-label="Primary">
+    <div class="wrap">
+      <a href={base || '/'}>{t.home}</a>
+      <a href={`${base}/nonprofit-credit-counseling/`}>{t.credit}</a>
+      <a href={`${base}/bankruptcy-attorneys/`}>{t.bankruptcy}</a>
+      <a href={`${base}/legal-aid/`}>{t.legal}</a>
+      <a href={`${base}/credit-unions/`}>{t.unions}</a>
+      <a href={`${base}/housing-counselors/`}>{t.housing}</a>
+      <a href={`${base}${lang === 'es' ? '/guias' : '/guides'}/`}>{t.guides}</a>
+      <a href={`${base}/about/`}>{t.about}</a>
+    </div>
+  </nav>
+
+  <main id="main">
+    <slot />
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-disclosure">
+        <strong style="color:#fff;">{lang === 'en' ? 'Not legal or financial advice.' : 'Esto no es asesoría legal ni financiera.'}</strong>
+        {' '}{t.notAdvice}
+        {' '}<a href={`${base}/how-we-make-money/`} style="color:#fff; text-decoration:underline;">{t.howWeMakeMoney}</a>.
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Miami Debt Help. Miami-Dade County, Florida.</span>
+        <span
+          ><a href={`${base}/privacy/`} style="color:inherit;">{t.privacy}</a> · <a
+            href={`${base}/terms/`}
+            style="color:inherit;">{t.terms}</a
+          ></span
+        >
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
