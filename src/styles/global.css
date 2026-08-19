@@ -387,6 +387,7 @@ footer{background: var(--ink); color:rgba(255,255,255,.7); padding:56px 0 28px; 
   .hero-visual{order:-1;}
   .category-grid{grid-template-columns: repeat(3,1fr);}
   .situation-grid{grid-template-columns:repeat(2,1fr);}
+  .trust-strip .wrap{grid-template-columns:1fr; gap:24px;}
   .content-layout{grid-template-columns:1fr;}
   .sidebar{position:static; flex-direction:row; flex-wrap:wrap;}
   .sidebar-card{flex:1; min-width:220px;}
