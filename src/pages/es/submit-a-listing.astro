@@ -1,0 +1,96 @@
+---
+import PolicyLayout from '../../layouts/PolicyLayout.astro';
+---
+
+<PolicyLayout
+  title="Agregar Su Organización | Miami Debt Help"
+  description="Agregue su organización sin fines de lucro, asistencia legal, cooperativa de crédito o bufete de abogados al directorio de Miami Debt Help — los listados gratuitos y pagados pasan por el mismo proceso de verificación."
+  lang="es"
+  altLangPath="/submit-a-listing/"
+  breadcrumbLabel="Agregar Su Organización"
+  h1="Agregue Su Organización"
+  intro="Si su organización atiende a residentes de Miami-Dade que enfrentan deudas — asesoría de crédito sin fines de lucro, asistencia legal, una cooperativa de crédito o un bufete de bancarrota — así es como puede aparecer en el directorio."
+>
+  <p>
+    Los listados gratuitos y los destacados pagados pasan exactamente por el mismo proceso de
+    verificación antes de publicarse — vea <a href="/es/how-we-verify/">Cómo Verificamos</a> y
+    <a href="/es/how-we-make-money/">Cómo Generamos Ingresos</a> para saber qué incluye ese
+    proceso y qué cambia — y qué no — un lugar pagado. Enviar este formulario no garantiza su
+    inclusión.
+  </p>
+
+  <form class="simple-form" aria-label="Agregar su organización">
+    <label>
+      Nombre de la organización
+      <input type="text" name="orgName" required />
+    </label>
+    <label>
+      Categoría
+      <select name="category" required>
+        <option value="">Seleccione una</option>
+        <option value="nonprofit-credit-counseling">Asesoría de Crédito Sin Fines de Lucro</option>
+        <option value="bankruptcy-attorneys">Abogados de Bancarrota</option>
+        <option value="legal-aid">Asistencia Legal</option>
+        <option value="credit-unions">Cooperativas de Crédito</option>
+        <option value="housing-counselors">Asesores de Vivienda</option>
+      </select>
+    </label>
+    <label>
+      Sitio web
+      <input type="url" name="website" placeholder="https://" />
+    </label>
+    <label>
+      Teléfono
+      <input type="tel" name="phone" />
+    </label>
+    <label>
+      Idiomas que ofrece
+      <input type="text" name="languages" placeholder="ej. inglés, español, criollo haitiano" />
+    </label>
+    <label>
+      Área de servicio
+      <input type="text" name="serviceArea" placeholder="ej. Condado de Miami-Dade" />
+    </label>
+    <label>
+      Estructura de costos
+      <textarea name="cost" rows="2" placeholder="Gratuito, escala móvil, tarifa fija, etc."></textarea>
+    </label>
+    <label>
+      Formato
+      <input type="text" name="format" placeholder="Teléfono, virtual, en persona, o una combinación" />
+    </label>
+    <label>
+      Su nombre y cargo en la organización
+      <input type="text" name="contactName" />
+    </label>
+    <label>
+      Su correo electrónico
+      <input type="email" name="contactEmail" required />
+    </label>
+    <label>
+      ¿Algo más que debamos saber? <span class="optional">(opcional)</span>
+      <textarea name="notes" rows="3"></textarea>
+    </label>
+    <button type="submit" class="btn btn-primary">Enviar para revisión</button>
+    <p class="form-note">
+      Este formulario todavía no está conectado a un correo — estamos preparando eso. Mientras
+      tanto, vea <a href="/es/contact/">Contacto</a> para otras formas de comunicarse con
+      nosotros.
+    </p>
+  </form>
+</PolicyLayout>
+
+<style>
+  .simple-form { display: flex; flex-direction: column; gap: 18px; max-width: 560px; margin-top: 8px; }
+  .simple-form label { display: flex; flex-direction: column; gap: 6px; font-size: 13.5px; font-weight: 600; color: var(--ink); }
+  .simple-form .optional { font-weight: 400; color: var(--ink-soft); }
+  .simple-form input, .simple-form textarea, .simple-form select {
+    font-family: var(--sans); font-size: 14.5px; padding: 11px 14px; border-radius: var(--radius-sm);
+    border: 1px solid var(--divider); background: #fff; color: var(--ink); resize: vertical;
+  }
+  .simple-form input:focus, .simple-form textarea:focus, .simple-form select:focus {
+    outline: 2px solid var(--teal-deep); outline-offset: 1px;
+  }
+  .simple-form button { align-self: flex-start; margin-top: 4px; }
+  .form-note { font-size: 12.5px; color: var(--ink-soft); margin-top: 4px; }
+</style>

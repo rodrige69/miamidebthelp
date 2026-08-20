@@ -1,0 +1,94 @@
+---
+import PolicyLayout from '../layouts/PolicyLayout.astro';
+---
+
+<PolicyLayout
+  title="List Your Organization | Miami Debt Help"
+  description="Add your nonprofit, legal aid organization, credit union, or law firm to the Miami Debt Help directory — free and paid featured placements both go through the same verification process."
+  lang="en"
+  altLangPath="/es/submit-a-listing/"
+  breadcrumbLabel="List Your Organization"
+  h1="List Your Organization"
+  intro="If your organization serves Miami-Dade residents dealing with debt — nonprofit credit counseling, legal aid, a credit union, or a bankruptcy practice — this is how to get listed."
+>
+  <p>
+    Free and paid featured listings go through the exact same verification process before
+    publishing — see <a href="/how-we-verify/">How We Verify</a> and
+    <a href="/how-we-make-money/">How We Make Money</a> for what that covers and what a paid
+    placement does and doesn't change. Submitting this form doesn't guarantee inclusion.
+  </p>
+
+  <form class="simple-form" aria-label="Submit a listing">
+    <label>
+      Organization name
+      <input type="text" name="orgName" required />
+    </label>
+    <label>
+      Category
+      <select name="category" required>
+        <option value="">Select one</option>
+        <option value="nonprofit-credit-counseling">Nonprofit Credit Counseling</option>
+        <option value="bankruptcy-attorneys">Bankruptcy Attorneys</option>
+        <option value="legal-aid">Legal Aid</option>
+        <option value="credit-unions">Credit Unions</option>
+        <option value="housing-counselors">Housing Counselors</option>
+      </select>
+    </label>
+    <label>
+      Website
+      <input type="url" name="website" placeholder="https://" />
+    </label>
+    <label>
+      Phone
+      <input type="tel" name="phone" />
+    </label>
+    <label>
+      Languages offered
+      <input type="text" name="languages" placeholder="e.g. English, Spanish, Haitian Creole" />
+    </label>
+    <label>
+      Service area
+      <input type="text" name="serviceArea" placeholder="e.g. Miami-Dade County" />
+    </label>
+    <label>
+      Cost / fee structure
+      <textarea name="cost" rows="2" placeholder="Free, sliding scale, flat fee, etc."></textarea>
+    </label>
+    <label>
+      Format
+      <input type="text" name="format" placeholder="Phone, virtual, in-person, or a mix" />
+    </label>
+    <label>
+      Your name and role at the organization
+      <input type="text" name="contactName" />
+    </label>
+    <label>
+      Your email
+      <input type="email" name="contactEmail" required />
+    </label>
+    <label>
+      Anything else we should know? <span class="optional">(optional)</span>
+      <textarea name="notes" rows="3"></textarea>
+    </label>
+    <button type="submit" class="btn btn-primary">Submit for review</button>
+    <p class="form-note">
+      This form isn't connected to an inbox yet — we're setting that up. In the meantime, see
+      <a href="/contact/">Contact</a> for other ways to reach us.
+    </p>
+  </form>
+</PolicyLayout>
+
+<style>
+  .simple-form { display: flex; flex-direction: column; gap: 18px; max-width: 560px; margin-top: 8px; }
+  .simple-form label { display: flex; flex-direction: column; gap: 6px; font-size: 13.5px; font-weight: 600; color: var(--ink); }
+  .simple-form .optional { font-weight: 400; color: var(--ink-soft); }
+  .simple-form input, .simple-form textarea, .simple-form select {
+    font-family: var(--sans); font-size: 14.5px; padding: 11px 14px; border-radius: var(--radius-sm);
+    border: 1px solid var(--divider); background: #fff; color: var(--ink); resize: vertical;
+  }
+  .simple-form input:focus, .simple-form textarea:focus, .simple-form select:focus {
+    outline: 2px solid var(--teal-deep); outline-offset: 1px;
+  }
+  .simple-form button { align-self: flex-start; margin-top: 4px; }
+  .form-note { font-size: 12.5px; color: var(--ink-soft); margin-top: 4px; }
+</style>

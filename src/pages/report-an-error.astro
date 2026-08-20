@@ -1,0 +1,56 @@
+---
+import PolicyLayout from '../layouts/PolicyLayout.astro';
+---
+
+<PolicyLayout
+  title="Report an Error | Miami Debt Help"
+  description="Found something outdated or incorrect on Miami Debt Help? Report it here — corrections are reviewed against our verification standard, not just taken on request."
+  lang="en"
+  altLangPath="/es/report-an-error/"
+  breadcrumbLabel="Report an Error"
+  h1="Report an Error"
+  intro="Phone numbers change, programs close, fees update. If something here is wrong, this is the fastest way to get it fixed."
+>
+  <p>
+    Tell us what page, what's wrong, and — if you know it — what it should say instead. We
+    review every report against the same source standard described in
+    <a href="/how-we-verify/">How We Verify</a> before making a change.
+  </p>
+
+  <form class="simple-form" aria-label="Report an error">
+    <label>
+      Page URL or title
+      <input type="text" name="page" placeholder="e.g. miamidebthelp.com/guides/medical-debt-miami-dade/" />
+    </label>
+    <label>
+      What's incorrect or outdated?
+      <textarea name="issue" rows="4" placeholder="Be as specific as you can."></textarea>
+    </label>
+    <label>
+      What should it say instead? <span class="optional">(optional)</span>
+      <textarea name="correction" rows="3"></textarea>
+    </label>
+    <label>
+      Your email <span class="optional">(optional, if you want to hear back)</span>
+      <input type="email" name="email" />
+    </label>
+    <button type="submit" class="btn btn-primary">Submit report</button>
+    <p class="form-note">
+      This form isn't connected to an inbox yet — we're setting that up. In the meantime, see
+      <a href="/contact/">Contact</a> for other ways to reach us.
+    </p>
+  </form>
+</PolicyLayout>
+
+<style>
+  .simple-form { display: flex; flex-direction: column; gap: 18px; max-width: 560px; margin-top: 8px; }
+  .simple-form label { display: flex; flex-direction: column; gap: 6px; font-size: 13.5px; font-weight: 600; color: var(--ink); }
+  .simple-form .optional { font-weight: 400; color: var(--ink-soft); }
+  .simple-form input, .simple-form textarea {
+    font-family: var(--sans); font-size: 14.5px; padding: 11px 14px; border-radius: var(--radius-sm);
+    border: 1px solid var(--divider); background: #fff; color: var(--ink); resize: vertical;
+  }
+  .simple-form input:focus, .simple-form textarea:focus { outline: 2px solid var(--teal-deep); outline-offset: 1px; }
+  .simple-form button { align-self: flex-start; margin-top: 4px; }
+  .form-note { font-size: 12.5px; color: var(--ink-soft); margin-top: 4px; }
+</style>

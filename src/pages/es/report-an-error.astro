@@ -1,0 +1,57 @@
+---
+import PolicyLayout from '../../layouts/PolicyLayout.astro';
+---
+
+<PolicyLayout
+  title="Reportar un Error | Miami Debt Help"
+  description="¿Encontró algo desactualizado o incorrecto en Miami Debt Help? Repórtelo aquí — las correcciones se revisan según nuestro estándar de verificación, no se aceptan simplemente porque se soliciten."
+  lang="es"
+  altLangPath="/report-an-error/"
+  breadcrumbLabel="Reportar un Error"
+  h1="Reportar un Error"
+  intro="Los números de teléfono cambian, los programas cierran, las tarifas se actualizan. Si algo aquí está mal, esta es la forma más rápida de corregirlo."
+>
+  <p>
+    Cuéntenos en qué página, qué está mal y — si lo sabe — qué debería decir en su lugar.
+    Revisamos cada reporte con el mismo estándar de fuentes descrito en
+    <a href="/es/how-we-verify/">Cómo Verificamos</a> antes de hacer un cambio.
+  </p>
+
+  <form class="simple-form" aria-label="Reportar un error">
+    <label>
+      URL o título de la página
+      <input type="text" name="page" placeholder="ej. miamidebthelp.com/es/guias/deudas-medicas-miami-dade/" />
+    </label>
+    <label>
+      ¿Qué es incorrecto o está desactualizado?
+      <textarea name="issue" rows="4" placeholder="Sea lo más específico posible."></textarea>
+    </label>
+    <label>
+      ¿Qué debería decir en su lugar? <span class="optional">(opcional)</span>
+      <textarea name="correction" rows="3"></textarea>
+    </label>
+    <label>
+      Su correo electrónico <span class="optional">(opcional, si desea que le respondamos)</span>
+      <input type="email" name="email" />
+    </label>
+    <button type="submit" class="btn btn-primary">Enviar reporte</button>
+    <p class="form-note">
+      Este formulario todavía no está conectado a un correo — estamos preparando eso. Mientras
+      tanto, vea <a href="/es/contact/">Contacto</a> para otras formas de comunicarse con
+      nosotros.
+    </p>
+  </form>
+</PolicyLayout>
+
+<style>
+  .simple-form { display: flex; flex-direction: column; gap: 18px; max-width: 560px; margin-top: 8px; }
+  .simple-form label { display: flex; flex-direction: column; gap: 6px; font-size: 13.5px; font-weight: 600; color: var(--ink); }
+  .simple-form .optional { font-weight: 400; color: var(--ink-soft); }
+  .simple-form input, .simple-form textarea {
+    font-family: var(--sans); font-size: 14.5px; padding: 11px 14px; border-radius: var(--radius-sm);
+    border: 1px solid var(--divider); background: #fff; color: var(--ink); resize: vertical;
+  }
+  .simple-form input:focus, .simple-form textarea:focus { outline: 2px solid var(--teal-deep); outline-offset: 1px; }
+  .simple-form button { align-self: flex-start; margin-top: 4px; }
+  .form-note { font-size: 12.5px; color: var(--ink-soft); margin-top: 4px; }
+</style>
