@@ -1,0 +1,206 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  category: 'nonprofit-credit-counseling' | 'bankruptcy-attorneys' | 'legal-aid' | 'credit-unions' | 'housing-counselors';
+  title: string;
+  description: string;
+  lang?: 'en' | 'es';
+  altLangPath?: string;
+  breadcrumbLabel: string;
+  h1: string;
+  intro: string;
+}
+
+const { category, title, description, lang = 'en', altLangPath, breadcrumbLabel, h1, intro } = Astro.props;
+
+const base = lang === 'es' ? '/es' : '';
+const homeLabel = lang === 'en' ? 'Home' : 'Inicio';
+
+const allListings = (await getCollection('listings', ({ data }) => data.category === category)).sort(
+  (a, b) => Number(b.data.featured) - Number(a.data.featured) || a.data.name.localeCompare(b.data.name)
+);
+
+const dateFmt = new Intl.DateTimeFormat(lang === 'es' ? 'es-US' : 'en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const t = lang === 'es'
+  ? {
+      featured: 'Destacado',
+      languages: 'Idiomas',
+      cost: 'Costo',
+      format: 'Formato',
+      serviceArea: 'Área de servicio',
+      visitWebsite: 'Sitio web',
+      verificationDetails: 'Detalles de verificación',
+      lastChecked: 'última revisión',
+      confirmed: 'Confirmado de forma independiente',
+      notVerified: 'No verificado de forma independiente',
+      sourcesChecked: 'Fuentes revisadas',
+      nextReview: 'Próxima revisión',
+      noListings: 'Todavía no hemos verificado ninguna organización en esta categoría.',
+      submitCta: '¿Conoce una organización que debería estar aquí?',
+      submitLink: 'Agréguela para revisión',
+      howWeVerifyLink: 'Cómo verificamos',
+      countSuffix: (n) => `${n} organizaci${n === 1 ? 'ón verificada' : 'ones verificadas'} en esta categoría.`,
+    }
+  : {
+      featured: 'Featured',
+      languages: 'Languages',
+      cost: 'Cost',
+      format: 'Format',
+      serviceArea: 'Service area',
+      visitWebsite: 'Website',
+      verificationDetails: 'Verification details',
+      lastChecked: 'last checked',
+      confirmed: 'Confirmed independently',
+      notVerified: 'Not independently verified',
+      sourcesChecked: 'Sources checked',
+      nextReview: 'Next review',
+      noListings: "We haven't verified any organizations in this category yet.",
+      submitCta: 'Know an organization that belongs here?',
+      submitLink: 'Submit it for review',
+      howWeVerifyLink: 'How we verify',
+      countSuffix: (n) => `${n} verified organization${n === 1 ? '' : 's'} in this category.`,
+    };
+---
+
+<BaseLayout title={title} description={description} lang={lang} altLangPath={altLangPath}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: homeLabel, item: `https://miamidebthelp.com${base || '/'}` },
+        { '@type': 'ListItem', position: 2, name: breadcrumbLabel },
+      ],
+    })} />
+  </Fragment>
+
+  <div class="wrap">
+    <div class="cat-breadcrumb"><a href={base || '/'}>{homeLabel}</a> / {breadcrumbLabel}</div>
+
+    <div class="cat-header">
+      <h1>{h1}</h1>
+      <p class="cat-intro">{intro}</p>
+      <p class="cat-count">{t.countSuffix(allListings.length)}</p>
+    </div>
+
+    {allListings.length === 0 ? (
+      <p class="cat-empty">{t.noListings}</p>
+    ) : (
+      <div class="listing-list">
+        {allListings.map((listing) => {
+          const d = listing.data;
+          return (
+            <div class="listing-card" id={listing.id}>
+              <div class="listing-card-head">
+                <h2>
+                  {d.website ? (
+                    <a href={d.website} target="_blank" rel="noopener noreferrer">{d.name}</a>
+                  ) : (
+                    d.name
+                  )}
+                  {d.featured && <span class="listing-featured-badge">{t.featured}</span>}
+                </h2>
+                <div class="listing-meta">
+                  {d.phone && <span>{d.phone}</span>}
+                  <span>{d.serviceArea}</span>
+                </div>
+              </div>
+
+              <dl class="listing-facts">
+                <div><dt>{t.languages}</dt><dd>{d.languages.join(', ')}</dd></div>
+                <div><dt>{t.cost}</dt><dd>{d.cost}</dd></div>
+                <div><dt>{t.format}</dt><dd>{d.format}</dd></div>
+              </dl>
+
+              <details class="listing-verify">
+                <summary>{t.verificationDetails} · {t.lastChecked} {dateFmt.format(d.verifiedDate)}</summary>
+                <div class="lv-grid">
+                  <div>
+                    <h4>{t.confirmed}</h4>
+                    <ul>{d.confirmed.map((item) => <li>{item}</li>)}</ul>
+                  </div>
+                  <div>
+                    <h4>{t.notVerified}</h4>
+                    <ul>{d.notIndependentlyVerified.map((item) => <li>{item}</li>)}</ul>
+                  </div>
+                </div>
+                <p class="lv-sources"><strong>{t.sourcesChecked}:</strong> {d.sourcesChecked.join(' · ')}</p>
+                <p class="lv-next">{t.nextReview}: {dateFmt.format(d.nextReviewDate)}</p>
+              </details>
+            </div>
+          );
+        })}
+      </div>
+    )}
+
+    <div class="cat-submit-cta">
+      <p>{t.submitCta} <a href={`${base}/submit-a-listing/`}>{t.submitLink} →</a></p>
+      <p class="cat-submit-note"><a href={`${base}/how-we-verify/`}>{t.howWeVerifyLink}</a></p>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .cat-breadcrumb { font-size: 13px; color: var(--ink-soft); padding: 18px 0 0; }
+  .cat-breadcrumb a { color: var(--teal-deep); text-decoration: none; font-weight: 600; }
+  .cat-header { padding: 24px 0 8px; max-width: 720px; }
+  .cat-header h1 { font-family: var(--serif); font-size: clamp(28px, 4vw, 40px); font-weight: 600; letter-spacing: -0.01em; line-height: 1.15; margin-bottom: 10px; }
+  .cat-intro { font-size: 16.5px; color: var(--ink-soft); line-height: 1.6; max-width: 680px; margin-bottom: 10px; }
+  .cat-count { font-size: 13px; font-weight: 600; color: var(--teal-mid); }
+  .cat-empty { color: var(--ink-soft); padding: 24px 0 48px; font-size: 15px; }
+
+  .listing-list { display: flex; flex-direction: column; gap: 18px; padding: 28px 0 20px; }
+  .listing-card {
+    background: var(--paper-card); border: 1px solid var(--divider); border-radius: var(--radius-md);
+    padding: 22px 24px;
+  }
+  .listing-card-head h2 {
+    font-family: var(--serif); font-size: 19px; font-weight: 600; line-height: 1.3;
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 6px;
+  }
+  .listing-card-head h2 a { color: var(--teal-deep); text-decoration: none; }
+  .listing-card-head h2 a:hover { text-decoration: underline; }
+  .listing-featured-badge {
+    font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--clay); border: 1px solid var(--clay); border-radius: 999px; padding: 2px 9px;
+  }
+  .listing-meta { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; color: var(--ink-soft); margin-bottom: 16px; }
+
+  .listing-facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 14px; }
+  .listing-facts dt { font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 3px; }
+  .listing-facts dd { font-size: 13.5px; color: var(--ink); line-height: 1.45; }
+
+  .listing-verify { border-top: 1px dashed var(--divider); padding-top: 12px; }
+  .listing-verify summary {
+    cursor: pointer; font-size: 12.5px; font-weight: 600; color: var(--teal-deep); list-style: none;
+  }
+  .listing-verify summary::-webkit-details-marker { display: none; }
+  .listing-verify summary::before { content: '▸ '; }
+  .listing-verify[open] summary::before { content: '▾ '; }
+  .lv-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 12px; }
+  .lv-grid h4 { font-size: 12px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+  .lv-grid ul { margin: 0 0 0 18px; padding: 0; }
+  .lv-grid li { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin-bottom: 5px; }
+  .lv-sources { font-size: 12px; color: var(--ink-soft); margin-top: 12px; line-height: 1.5; }
+  .lv-next { font-size: 12px; color: var(--ink-soft); margin-top: 4px; font-weight: 600; }
+
+  .cat-submit-cta {
+    border-top: 1px solid var(--divider); padding: 24px 0 56px; margin-top: 8px;
+    font-size: 14px; color: var(--ink-soft);
+  }
+  .cat-submit-cta a { color: var(--teal-deep); font-weight: 600; text-decoration: none; }
+  .cat-submit-cta a:hover { text-decoration: underline; }
+  .cat-submit-note { margin-top: 6px; font-size: 12.5px; }
+
+  @media (max-width: 680px) {
+    .listing-facts { grid-template-columns: 1fr; }
+    .lv-grid { grid-template-columns: 1fr; }
+  }
+</style>
